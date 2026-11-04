@@ -38,6 +38,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => 
               Home
             </button>
             <button
+              onClick={() => onNavigate('showreel')}
+              className="hover:text-white transition-colors"
+            >
+              Showreel
+            </button>
+            <button
               onClick={() => onNavigate('about')}
               className="hover:text-white transition-colors"
             >

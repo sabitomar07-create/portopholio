@@ -76,15 +76,17 @@ export const About: React.FC = () => {
 
               {/* Photo Frame */}
               <div className="relative bg-[#0d0e12] border border-white/15 rounded-3xl p-3 shadow-2xl overflow-hidden">
-                <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-neutral-900">
+                <div className="relative aspect-[4/5] sm:aspect-square w-full rounded-2xl overflow-hidden bg-neutral-900">
                   <img
-                    src="/src/assets/images/omar_profile_portrait_1793661547086.jpg"
-                    alt="Omar - Web Developer Portrait"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    src="/assets/aistudio/WhatsApp_Image_2026-10-29_at_9.34.35_AM_84d30dde.jpeg"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/src/assets/images/omar_profile_photo.jpeg';
+                    }}
+                    alt="Omar - Web Developer Profile Photo"
+                    className="w-full h-full object-cover object-[50%_18%] transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Subtle vignette scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
                   {/* Corner indicator */}
                   <div className="absolute bottom-3 left-3 right-3 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs text-neutral-200">
@@ -97,7 +99,7 @@ export const About: React.FC = () => {
 
                 <div className="mt-3 px-2 py-1 text-center">
                   <p className="text-xs text-neutral-400 font-mono">
-                    Profile Photo · Easily swappable asset
+                    Omar · Web Developer
                   </p>
                 </div>
               </div>

@@ -13,58 +13,40 @@ import { ProjectModal } from './ProjectModal';
 
 const INITIAL_PROJECTS: Project[] = [
   {
-    id: 'muslims-app',
-    number: 'FEATURED 01',
-    title: 'MUSLIMS WEB APP',
-    description: 'A community digital platform and resource hub built by Omar, deployed live on Vercel.',
-    longDescription: 'A web platform engineered by Omar and deployed on Vercel. Features a sleek responsive dark dashboard, community resources, prayer timetables, event modules, and clean component architecture.',
+    id: 'omar-portfolio',
+    number: 'PROJECT 01',
+    title: 'OMAR PORTFOLIO',
+    description: 'A personal developer portfolio showcasing my work, skills, creativity, and web development journey.',
+    longDescription: 'A personal developer portfolio engineered to showcase my interactive projects, frontend skills, creative coding, and web development journey. Built with modern React, fluid animations, glowing dark-theme aesthetics, and mobile-first design.',
     technologies: ['React', 'JavaScript', 'Tailwind CSS', 'Vercel Deployment'],
-    imageUrl: '/src/assets/images/project_muslims_preview_1793662392866.jpg',
-    demoUrl: 'https://muslims-8ahziv1yy-omar-5997.vercel.app/',
-    githubUrl: 'https://github.com/omar-dev/muslims-web-app',
+    imageUrl: '/src/assets/images/project_omar_portfolio_preview_1793731034310.jpg',
+    demoUrl: 'https://portopholio-one.vercel.app/',
+    githubUrl: 'https://github.com/omar-dev/portfolio-one',
     features: [
-      'Live deployed on Vercel with global CDN acceleration',
-      'Responsive community dashboard and resource timetable',
-      'Modern dark UI with fluid layout transitions',
-      'Custom component structure and mobile-first navigation',
+      'Live deployment on Vercel with high-speed CDN response',
+      'Showcases developer skills, interactive builds, and creative coding',
+      'Smooth motion transitions, glowing borders, and responsive design',
+      'Accessible keyboard controls and mobile-first layout optimization',
     ],
     isSample: false,
   },
   {
-    id: 'ecommerce-store',
+    id: 'muslim-shirts',
     number: 'PROJECT 02',
-    title: 'E-COMMERCE STORE',
-    description: 'A modern online store with interactive product cards, filter systems, and responsive layouts.',
-    longDescription: 'An interactive storefront prototype designed for premium audio hardware and lifestyle tech. Features dynamic cart state management, product filtering by category, image galleries, and responsive product grids.',
-    technologies: ['React', 'CSS3', 'JavaScript'],
-    imageUrl: '/src/assets/images/project_ecommerce_preview_1793661548254.jpg',
+    title: 'MUSLIM SHIRTS',
+    description: 'A custom e-commerce web platform and brand storefront created and built by Omar, deployed live on Vercel.',
+    longDescription: 'A live e-commerce website and brand platform created by Omar for Muslim Shirts, deployed on Vercel. Features interactive apparel product cards, responsive shopping layouts, seamless catalog browsing, and optimized mobile design.',
+    technologies: ['React', 'Next.js', 'Tailwind CSS', 'Vercel Deployment'],
+    imageUrl: '/src/assets/images/project_muslims_preview_1793662392866.jpg',
     demoUrl: 'https://muslims-8ahziv1yy-omar-5997.vercel.app/',
-    githubUrl: '#',
+    githubUrl: 'https://github.com/omar-dev/muslim-shirts',
     features: [
-      'Interactive product cards with instant hover zoom',
-      'Category filtering and live cart counter badge',
-      'Detailed item specification drawers',
-      'Fluid mobile-first checkout preview',
+      'Live e-commerce storefront deployed on Vercel with global CDN delivery',
+      'Custom apparel showcase with interactive product cards',
+      'Responsive shopping layouts optimized across mobile, tablet, and desktop',
+      'Created and maintained directly by Omar',
     ],
-    isSample: true,
-  },
-  {
-    id: 'creative-landing-page',
-    number: 'PROJECT 03',
-    title: 'CREATIVE LANDING PAGE',
-    description: 'A visually engaging landing page with smooth animations, futuristic gradients, and modern design.',
-    longDescription: 'An immersive digital experience showcasing generative visual art, fluid 3D gradient themes, and high-impact hero typography. Engineered to explore interactive micro-interactions and high-performance compositor animations.',
-    technologies: ['HTML5', 'CSS3', 'JavaScript'],
-    imageUrl: '/src/assets/images/project_landing_preview_1793661548791.jpg',
-    demoUrl: 'https://muslims-8ahziv1yy-omar-5997.vercel.app/',
-    githubUrl: '#',
-    features: [
-      'Layered gradient illumination and atmospheric orbs',
-      'Scroll-triggered staggered content reveals',
-      'Fluid typography scale across all viewports',
-      'Zero layout shifts with optimized transforms',
-    ],
-    isSample: true,
+    isSample: false,
   },
 ];
 
@@ -99,52 +81,60 @@ export const Projects: React.FC = () => {
           </h2>
 
           <p className="text-base sm:text-lg text-neutral-300 leading-relaxed mb-6">
-            A curated collection of web applications, platforms, and interfaces built by Omar. Featuring live production deployments on Vercel alongside experimental designs.
+            A curated showcase of real web applications and projects created, built, and deployed by Omar on Vercel.
           </p>
 
-          {/* Prominent Live Vercel Project Badge */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-3 p-2 px-4 rounded-xl bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 backdrop-blur-md shadow-lg shadow-blue-900/20">
+          {/* Prominent Live Vercel Deployments Badges */}
+          <div className="inline-flex flex-wrap items-center justify-center gap-3 p-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-900/30 via-indigo-900/30 to-purple-900/30 border border-blue-500/30 backdrop-blur-md shadow-lg shadow-blue-900/20">
             <div className="flex items-center gap-2 text-xs font-medium text-emerald-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
-              <span>Live Deployment:</span>
+              <span>Live Projects:</span>
             </div>
+            <a
+              href="https://portopholio-one.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-blue-300 hover:text-white underline underline-offset-4 decoration-blue-500/50 hover:decoration-blue-400 transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5 text-blue-400" />
+              <span>Omar Portfolio</span>
+              <ExternalLink className="w-3 h-3 ml-0.5" />
+            </a>
+            <span className="text-neutral-500 hidden sm:inline">·</span>
             <a
               href="https://muslims-8ahziv1yy-omar-5997.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-blue-300 hover:text-white underline underline-offset-4 decoration-blue-500/50 hover:decoration-blue-400 transition-colors"
+              className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-emerald-300 hover:text-white underline underline-offset-4 decoration-emerald-500/50 hover:decoration-emerald-400 transition-colors"
             >
-              <Globe className="w-3.5 h-3.5 text-blue-400" />
-              <span>muslims-8ahziv1yy-omar-5997.vercel.app</span>
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Muslim Shirts Store</span>
               <ExternalLink className="w-3 h-3 ml-0.5" />
             </a>
           </div>
         </motion.div>
 
-        {/* Projects Grid: Staggered entrance across all cards */}
+        {/* Projects Grid: 2 Real Projects in Balanced Responsive Layout */}
         <motion.div
           variants={staggerGridContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
         >
           {INITIAL_PROJECTS.map((project) => {
-            const isLive = !project.isSample;
-
             return (
               <motion.article
                 key={project.id}
                 variants={projectCardFadeScaleVariant}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 transition={{ duration: 0.3 }}
-                className={`group relative bg-[#0e0f14]/90 border rounded-2xl overflow-hidden backdrop-blur-md shadow-xl flex flex-col justify-between transition-all ${
-                  isLive
-                    ? 'border-emerald-500/40 hover:border-emerald-400 shadow-emerald-950/30 hover:shadow-emerald-900/30 ring-1 ring-emerald-500/20'
-                    : 'border-white/10 hover:border-blue-500/40 hover:shadow-blue-900/20'
-                }`}
+                className="group relative bg-[#0e0f14]/90 border rounded-2xl overflow-hidden backdrop-blur-md shadow-xl flex flex-col justify-between transition-all duration-300 border-emerald-500/40 hover:border-emerald-400 shadow-emerald-950/30 hover:shadow-2xl hover:shadow-emerald-500/20 ring-1 ring-emerald-500/20"
               >
-                {/* Animation 3: Project preview image with entrance zoom settling and hover zoom */}
+                {/* Subtle ambient hover glow gradient inside card */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/5 via-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                {/* Project preview image with entrance zoom settling and hover zoom */}
                 <div
                   onClick={() => setSelectedProject(project)}
                   className="relative aspect-video w-full overflow-hidden cursor-pointer bg-neutral-900"
@@ -169,18 +159,12 @@ export const Projects: React.FC = () => {
                     {project.number}
                   </div>
 
-                  {/* Live or Sample Badge */}
+                  {/* Live Badge */}
                   <div className="absolute top-3 right-3">
-                    {isLive ? (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-600/90 backdrop-blur-md text-[11px] font-mono font-semibold text-white shadow-md shadow-emerald-600/30">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                        <span>LIVE ON VERCEL</span>
-                      </span>
-                    ) : (
-                      <span className="px-2 py-0.5 rounded-md bg-blue-600/80 backdrop-blur-md text-[10px] font-mono uppercase tracking-wider text-white">
-                        Concept Showcase
-                      </span>
-                    )}
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-600/90 backdrop-blur-md text-[11px] font-mono font-semibold text-white shadow-md shadow-emerald-600/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                      <span>LIVE ON VERCEL</span>
+                    </span>
                   </div>
 
                   {/* Quick inspection hover overlay */}
@@ -193,19 +177,17 @@ export const Projects: React.FC = () => {
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Title */}
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <h3
                         onClick={() => setSelectedProject(project)}
-                        className="text-xl font-bold text-white tracking-tight cursor-pointer hover:text-blue-400 transition-colors"
+                        className="text-xl sm:text-2xl font-bold text-white tracking-tight cursor-pointer hover:text-blue-400 transition-colors"
                       >
                         {project.title}
                       </h3>
-                      {isLive && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      )}
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
                     </div>
 
                     {/* Description */}
@@ -226,18 +208,14 @@ export const Projects: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Card Action Buttons with subtle hover & tap scaling */}
+                  {/* Card Action Buttons with prominent Live Demo CTA */}
                   <div className="pt-4 border-t border-white/5 flex items-center gap-2 sm:gap-3">
                     <motion.a
                       {...buttonScaleProps}
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl text-white text-xs font-semibold tracking-wide shadow-md transition-all ${
-                        isLive
-                          ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-600/30'
-                          : 'bg-blue-600/90 hover:bg-blue-600 shadow-blue-600/20'
-                      }`}
+                      className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white text-xs font-semibold tracking-wide shadow-md transition-all bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-600/30"
                     >
                       <span>LIVE DEMO</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -246,7 +224,7 @@ export const Projects: React.FC = () => {
                     <motion.button
                       {...buttonScaleProps}
                       onClick={() => setSelectedProject(project)}
-                      className="px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs font-medium tracking-wide transition-all"
+                      className="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs font-medium tracking-wide transition-all"
                       title="Inspect full project details"
                     >
                       <span>DETAILS</span>
@@ -255,7 +233,7 @@ export const Projects: React.FC = () => {
                     <motion.button
                       {...buttonScaleProps}
                       onClick={() => handleCopyNotice(project.id, project.demoUrl)}
-                      className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs transition-all"
+                      className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs transition-all"
                       title="Copy link to project"
                       aria-label="Copy project URL"
                     >

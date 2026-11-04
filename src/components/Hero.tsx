@@ -171,6 +171,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
               <motion.button
                 {...buttonScaleProps}
+                onClick={() => onNavigate('showreel')}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-200 hover:text-white border border-purple-500/30 hover:border-purple-500/60 font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-2 group shadow-sm shadow-purple-500/10"
+              >
+                <Play className="w-4 h-4 text-purple-400 fill-purple-400/30 group-hover:scale-110 transition-transform" />
+                <span>15S SHOWREEL</span>
+              </motion.button>
+
+              <motion.button
+                {...buttonScaleProps}
                 onClick={() => onNavigate('contact')}
                 className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white border border-white/15 hover:border-white/25 font-semibold text-sm tracking-wide transition-all flex items-center justify-center gap-2"
               >
@@ -308,14 +317,25 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                       <span className="text-amber-300">"Animations"</span>],
                     </div>
                     <div className="pl-4">
-                      <span className="text-neutral-300">liveProject:</span>{' '}
+                      <span className="text-neutral-300">portfolio:</span>{' '}
                       <a
-                        href="https://muslims-8ahziv1yy-omar-5997.vercel.app/"
+                        href="https://portopholio-one.vercel.app/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-emerald-400 hover:underline"
                       >
-                        "muslims-...vercel.app"
+                        "portopholio-one.vercel.app"
+                      </a>,
+                    </div>
+                    <div className="pl-4">
+                      <span className="text-neutral-300">muslimShirts:</span>{' '}
+                      <a
+                        href="https://muslims-8ahziv1yy-omar-5997.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-cyan-400 hover:underline"
+                      >
+                        "muslim-shirts.vercel.app"
                       </a>,
                     </div>
                     <div className="pl-4">

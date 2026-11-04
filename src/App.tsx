@@ -3,6 +3,7 @@ import { BackgroundEffect } from './components/BackgroundEffect';
 import { WelcomePopup } from './components/WelcomePopup';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { Showreel } from './components/Showreel';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
@@ -36,7 +37,7 @@ export default function App() {
 
   // Active section tracking via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
+    const sectionIds = ['home', 'showreel', 'about', 'skills', 'projects', 'contact'];
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -84,6 +85,8 @@ export default function App() {
       {/* Main Content Sections with All 4 Animation Systems */}
       <main id="main-content">
         <Hero onNavigate={scrollToSection} />
+        {/* Dedicated 15-Second Cinematic Motion Graphics Showreel */}
+        <Showreel onNavigate={scrollToSection} />
         <About />
         <Skills />
         <Projects />
