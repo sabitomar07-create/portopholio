@@ -18,7 +18,6 @@ const NAV_ITEMS = [
   { id: 'home', label: 'Home' },
   { id: 'showreel', label: 'Showreel' },
   { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -45,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate, onOpe
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`glass-surface fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
           ? 'bg-[#080808]/85 backdrop-blur-md border-b border-white/10 py-3.5 shadow-lg shadow-black/50'
           : 'bg-transparent py-5 border-b border-transparent'

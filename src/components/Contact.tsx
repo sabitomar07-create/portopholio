@@ -3,9 +3,6 @@ import { motion } from 'framer-motion';
 import {
   Mail,
   Send,
-  Github,
-  Linkedin,
-  Twitter,
   MessageSquare,
   Check,
   Copy,
@@ -128,7 +125,7 @@ export const Contact: React.FC = () => {
             className="lg:col-span-5 flex flex-col gap-6"
           >
             {/* Primary Email Card */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-[#0e0f14]/80 border border-white/10 backdrop-blur-md shadow-xl">
+            <div className="glass-surface p-6 sm:p-7 rounded-2xl border border-white/10 shadow-xl">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400">
                   <Mail className="w-6 h-6" />
@@ -173,63 +170,6 @@ export const Contact: React.FC = () => {
               </motion.a>
             </div>
 
-            {/* Social Profile Placeholders */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-[#0e0f14]/80 border border-white/10 backdrop-blur-md shadow-xl">
-              <h3 className="text-base font-bold text-white mb-2">Connect Across Platforms</h3>
-              <p className="text-xs text-neutral-400 mb-5">
-                Clearly marked profile channels for Omar's open-source repositories and networking.
-              </p>
-
-              <div className="flex flex-col gap-3">
-                <motion.a
-                  whileHover={{ x: 4, scale: 1.01 }}
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 hover:border-white/15 text-neutral-300 hover:text-white transition-all text-xs group"
-                >
-                  <div className="flex items-center gap-3">
-                    <Github className="w-4 h-4 text-blue-400" />
-                    <span className="font-mono">github.com/omar-dev</span>
-                  </div>
-                  <span className="text-[11px] text-neutral-500 group-hover:text-blue-400 transition-colors">
-                    GitHub Profile
-                  </span>
-                </motion.a>
-
-                <motion.a
-                  whileHover={{ x: 4, scale: 1.01 }}
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 hover:border-white/15 text-neutral-300 hover:text-white transition-all text-xs group"
-                >
-                  <div className="flex items-center gap-3">
-                    <Linkedin className="w-4 h-4 text-sky-400" />
-                    <span className="font-mono">linkedin.com/in/omar-dev</span>
-                  </div>
-                  <span className="text-[11px] text-neutral-500 group-hover:text-sky-400 transition-colors">
-                    LinkedIn Network
-                  </span>
-                </motion.a>
-
-                <motion.a
-                  whileHover={{ x: 4, scale: 1.01 }}
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 hover:border-white/15 text-neutral-300 hover:text-white transition-all text-xs group"
-                >
-                  <div className="flex items-center gap-3">
-                    <Twitter className="w-4 h-4 text-purple-400" />
-                    <span className="font-mono">@omar_builds</span>
-                  </div>
-                  <span className="text-[11px] text-neutral-500 group-hover:text-purple-400 transition-colors">
-                    Tech Updates
-                  </span>
-                </motion.a>
-              </div>
-            </div>
           </motion.div>
 
           {/* Right Column: Accessible Contact Form */}
@@ -239,7 +179,7 @@ export const Contact: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
             custom={0.3}
-            className="lg:col-span-7 bg-[#0e0f14]/90 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-md shadow-xl"
+            className="glass-surface lg:col-span-7 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-xl"
           >
             <h3 className="text-xl font-bold text-white tracking-tight mb-1">
               Send a Message

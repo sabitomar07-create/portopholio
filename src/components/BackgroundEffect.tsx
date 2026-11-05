@@ -1,7 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export const BackgroundEffect: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
       {/* Background Grid Pattern */}
@@ -9,7 +10,7 @@ export const BackgroundEffect: React.FC = () => {
 
       {/* Primary Electric Blue Glowing Orb: Slowly drifts to create ambient depth */}
       <motion.div
-        animate={{
+        animate={prefersReducedMotion ? undefined : {
           x: [0, 45, -35, 0],
           y: [0, -50, 25, 0],
           scale: [1, 1.15, 0.95, 1],
@@ -24,7 +25,7 @@ export const BackgroundEffect: React.FC = () => {
 
       {/* Secondary Violet Glowing Orb: Counter-drifting */}
       <motion.div
-        animate={{
+        animate={prefersReducedMotion ? undefined : {
           x: [0, -55, 45, 0],
           y: [0, 60, -35, 0],
           scale: [1, 1.2, 0.9, 1],
@@ -39,7 +40,7 @@ export const BackgroundEffect: React.FC = () => {
 
       {/* Subtle Cyan Accent Orb near top right */}
       <motion.div
-        animate={{
+        animate={prefersReducedMotion ? undefined : {
           x: [0, 30, -20, 0],
           y: [0, 40, -25, 0],
           scale: [0.9, 1.1, 1, 0.9],

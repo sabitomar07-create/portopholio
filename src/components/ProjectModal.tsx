@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Github, Sparkles, CheckCircle2, AlertCircle, Copy, Check, Globe } from 'lucide-react';
+import { X, ExternalLink, Sparkles, CheckCircle2, Copy, Check, Globe } from 'lucide-react';
 import { Project } from '../types/portfolio';
 import {
   modalSpringVariant,
@@ -68,7 +68,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative w-full max-w-3xl bg-[#0e0f14] border border-white/20 rounded-2xl shadow-2xl shadow-blue-950/50 overflow-hidden z-10 my-8 flex flex-col max-h-[90vh]"
+            className="glass-surface relative w-full max-w-3xl border border-white/20 rounded-2xl shadow-2xl shadow-blue-950/50 overflow-hidden z-10 my-8 flex flex-col max-h-[90vh]"
           >
             {/* Top Close Button */}
             <motion.button
@@ -95,16 +95,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   <span className="font-mono px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/15 text-blue-400">
                     {project.number}
                   </span>
-                  {!project.isSample ? (
-                    <span className="px-2.5 py-1 rounded bg-emerald-600/90 backdrop-blur-md font-semibold text-white flex items-center gap-1.5 shadow-md">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                      <span>Production Live App</span>
-                    </span>
-                  ) : (
-                    <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md border border-white/15 text-neutral-300">
-                      Concept Showcase
-                    </span>
-                  )}
+                  <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md border border-white/15 text-neutral-300">Concept preview</span>
                 </div>
               </div>
 
@@ -153,7 +144,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               {/* Tech Stack Chips */}
               <div className="mb-6">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
-                  Technologies Utilized
+                  Concept tags
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
@@ -170,7 +161,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               {/* Key Features List */}
               <div className="mb-6">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400 mb-3">
-                  Key Interactive Capabilities
+                  Preview notes
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {project.features.map((feature, i) => (
@@ -185,31 +176,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 </div>
               </div>
 
-              {/* Live or Sample Status Banner */}
-              {!project.isSample ? (
-                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-start gap-3 text-xs text-emerald-300 mb-6">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong>Verified Built Project:</strong> This application is live and hosted on Vercel at{' '}
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline font-mono text-white hover:text-emerald-300"
-                    >
-                      {project.demoUrl}
-                    </a>
-                    . Click below to launch the live platform.
-                  </div>
-                </div>
-              ) : (
-                <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-start gap-3 text-xs text-amber-200/90 mb-6">
-                  <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Project Roadmap Concept:</strong> Demonstrates Omar's frontend design and component skills. Real deployment link provided above connects to Omar's active Vercel application.
-                  </span>
-                </div>
-              )}
+              <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-3 text-xs text-blue-100/90 mb-6">
+                <Sparkles className="w-4 h-4 text-blue-300 shrink-0 mt-0.5" />
+                <span>This is a visual concept preview. The external link opens the linked page and may change over time.</span>
+              </div>
 
               {/* Actions Footer */}
               <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
@@ -221,19 +191,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  <span>Launch Live App (Vercel)</span>
+                  <span>Open Preview</span>
                 </motion.a>
 
                 <motion.button
                   {...buttonScaleProps}
-                  onClick={() => {
-                    navigator.clipboard.writeText(project.demoUrl);
-                    alert(`Project URL copied to clipboard: ${project.demoUrl}`);
-                  }}
+                  onClick={handleCopyLink}
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white border border-white/15 font-semibold text-sm tracking-wide transition-all"
                 >
-                  <Github className="w-4 h-4" />
-                  <span>Copy Live Link</span>
+                  <Copy className="w-4 h-4" />
+                  <span>{copiedLink ? 'Copied' : 'Copy Preview Link'}</span>
                 </motion.button>
               </div>
             </div>

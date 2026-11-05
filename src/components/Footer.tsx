@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUp, Code2, Heart, Sparkles } from 'lucide-react';
 import { buttonScaleProps } from '../utils/animations';
+import { LegalModal, type LegalDocument } from './LegalModal';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -9,6 +10,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => {
+  const [legalDocument, setLegalDocument] = useState<LegalDocument | null>(null);
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -16,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => 
   };
 
   return (
-    <footer className="relative z-10 border-t border-white/10 bg-[#060608] py-12 text-neutral-400 text-sm">
+    <footer className="glass-surface relative z-10 border-t border-white/10 py-12 text-neutral-400 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/5">
           {/* Brand & Tagline */}
@@ -48,12 +50,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => 
               className="hover:text-white transition-colors"
             >
               About
-            </button>
-            <button
-              onClick={() => onNavigate('skills')}
-              className="hover:text-white transition-colors"
-            >
-              Skills
             </button>
             <button
               onClick={() => onNavigate('projects')}
@@ -95,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => 
         {/* Bottom Credits & Authenticity */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
           <div className="flex items-center gap-2">
-            <span>DESIGNED &amp; BUILT BY OMAR</span>
+            <span>OMAR.DEV · PERSONAL PORTFOLIO</span>
             <span aria-hidden="true">·</span>
             <span className="inline-flex items-center gap-1">
               Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-current animate-pulse" /> &amp; React
@@ -103,15 +99,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenWelcome }) => 
           </div>
 
           <div className="flex items-center gap-4 text-neutral-400">
+            <button onClick={() => setLegalDocument('privacy')} className="hover:text-white transition-colors">Privacy &amp; cookies</button>
+            <button onClick={() => setLegalDocument('terms')} className="hover:text-white transition-colors">Terms</button>
             <span>&copy; {currentYear} Omar</span>
             <span aria-hidden="true">·</span>
             <span className="flex items-center gap-1 font-mono text-[11px] text-blue-400">
               <Code2 className="w-3 h-3" />
-              <span>Next-Level Portfolio</span>
+              <span>Portfolio</span>
             </span>
           </div>
         </div>
       </div>
+      <LegalModal document={legalDocument} onClose={() => setLegalDocument(null)} />
     </footer>
   );
 };

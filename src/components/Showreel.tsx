@@ -13,12 +13,13 @@ import {
   Code2,
   ArrowRight,
   ExternalLink,
-  Laptop,
   CheckCircle2,
   Layers,
   Cpu,
 } from 'lucide-react';
 import { buttonScaleProps, SMOOTH_EASE } from '../utils/animations';
+import portfolioPreview from '../assets/images/project_omar_portfolio_preview_1793731034310.jpg';
+import storePreview from '../assets/images/project_muslims_preview_1793662392866.jpg';
 
 interface ShowreelProps {
   onNavigate: (sectionId: string) => void;
@@ -30,13 +31,13 @@ const CHAPTERS = [
   { id: 1, start: 0, end: 3, label: '01. INTRO', title: 'Cinematic Reveal' },
   { id: 2, start: 3, end: 6, label: '02. CODE', title: 'Creative Web Craft' },
   { id: 3, start: 6, end: 9, label: '03. 3D MOTION', title: 'Kinetic Dimensions' },
-  { id: 4, start: 9, end: 12, label: '04. PROJECTS', title: 'Real Live Deployments' },
+  { id: 4, start: 9, end: 12, label: '04. PROJECTS', title: 'Project Previews' },
   { id: 5, start: 12, end: 15, label: '05. FINALE', title: "Let's Build" },
 ];
 
 export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
   const prefersReducedMotion = useReducedMotion();
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -45,7 +46,13 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const isPlayingRef = useRef<boolean>(isPlaying);
+  const currentTimeRef = useRef<number>(0);
   isPlayingRef.current = isPlaying;
+
+  useEffect(() => {
+    if (prefersReducedMotion === false) setIsPlaying(true);
+    if (prefersReducedMotion === true) setIsPlaying(false);
+  }, [prefersReducedMotion]);
 
   // Synthesize soft ambient chords via Web Audio API (zero external assets, hermetic & high fidelity)
   const playSynthesizerNote = useCallback((freq: number, duration = 0.8) => {
@@ -76,29 +83,29 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
 
   // High-precision animation clock (60fps requestAnimationFrame)
   useEffect(() => {
-    if (prefersReducedMotion) return;
-
     let lastTimestamp = performance.now();
     let animFrame: number;
 
     const tick = (now: number) => {
-      const delta = (now - lastTimestamp) / 1000;
+      const delta = Math.min((now - lastTimestamp) / 1000, 0.1);
       lastTimestamp = now;
 
       if (isPlayingRef.current) {
-        setCurrentTime((prev) => {
-          const next = prev + delta;
-          if (next >= DURATION_SECONDS) {
-            if (autoLoop) {
-              playSynthesizerNote(440, 0.4);
-              return 0;
-            } else {
-              setIsPlaying(false);
-              return DURATION_SECONDS;
-            }
+        const next = currentTimeRef.current + delta;
+        if (next >= DURATION_SECONDS) {
+          if (autoLoop) {
+            playSynthesizerNote(440, 0.4);
+            currentTimeRef.current = 0;
+            setCurrentTime(0);
+          } else {
+            currentTimeRef.current = DURATION_SECONDS;
+            setCurrentTime(DURATION_SECONDS);
+            setIsPlaying(false);
           }
-          return next;
-        });
+        } else {
+          currentTimeRef.current = next;
+          setCurrentTime(next);
+        }
       }
       animFrame = requestAnimationFrame(tick);
     };
@@ -120,6 +127,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
 
   const togglePlay = () => {
     if (currentTime >= DURATION_SECONDS) {
+      currentTimeRef.current = 0;
       setCurrentTime(0);
       setIsPlaying(true);
     } else {
@@ -128,6 +136,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
   };
 
   const jumpToChapter = (startSeconds: number) => {
+    currentTimeRef.current = startSeconds;
     setCurrentTime(startSeconds);
     setIsPlaying(true);
   };
@@ -136,12 +145,16 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
     if (!containerRef.current) return;
     if (!document.fullscreenElement) {
       containerRef.current.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
     } else {
       document.exitFullscreen().catch(() => {});
-      setIsFullscreen(false);
     }
   };
+
+  useEffect(() => {
+    const syncFullscreen = () => setIsFullscreen(document.fullscreenElement === containerRef.current);
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () => document.removeEventListener('fullscreenchange', syncFullscreen);
+  }, []);
 
   // Determine current scene: 0 (0-3s), 1 (3-6s), 2 (6-9s), 3 (9-12s), 4 (12-15s)
   const scene = Math.min(Math.floor(currentTime / 3), 4);
@@ -161,7 +174,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
               MOTION &amp; DIGITAL CRAFT.
             </h2>
             <p className="text-sm sm:text-base text-neutral-400 max-w-xl">
-              An interactive 15-second visual showreel highlighting dynamic typography, 3D perspective transformations, live code craft, and real deployed projects.
+              A short animated preview of this portfolio, with motion graphics and project concepts.
             </p>
           </div>
 
@@ -190,7 +203,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
         {/* Cinematic Theatrical Viewport Container */}
         <div
           ref={containerRef}
-          className={`relative w-full rounded-2xl sm:rounded-3xl border border-white/15 bg-black overflow-hidden shadow-2xl shadow-black/80 transition-all ${
+          className={`glass-surface relative w-full rounded-2xl sm:rounded-3xl border border-white/15 overflow-hidden shadow-2xl shadow-black/80 transition-all ${
             isFullscreen ? 'h-screen rounded-none border-none' : 'aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9] min-h-[440px] sm:min-h-[520px]'
           }`}
         >
@@ -208,7 +221,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
           <div className="absolute top-4 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between text-[11px] font-mono text-neutral-400 z-30 pointer-events-none">
             <div className="flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              <span className="text-white font-semibold tracking-wider">REC // 4K 60FPS</span>
+              <span className="text-white font-semibold tracking-wider">PORTFOLIO PREVIEW</span>
               <span className="text-neutral-600 hidden sm:inline">|</span>
               <span className="text-blue-400 hidden sm:inline">OMAR_SHOWREEL.MP4</span>
             </div>
@@ -313,7 +326,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                         <span className="ml-2 text-white font-medium">ShowreelEngine.tsx</span>
                       </div>
-                      <span className="text-blue-400">60 FPS // GPU ACCELERATED</span>
+                      <span className="text-blue-400">MOTION PREVIEW</span>
                     </div>
 
                     <div className="font-mono text-xs sm:text-sm text-neutral-300 space-y-1.5 leading-relaxed">
@@ -454,7 +467,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
             )}
 
             {/* =========================================================================
-                SCENE 4: 9–12s — REAL PROJECTS SHOWCASE (Only Omar's Actual Real Projects)
+                SCENE 4: 9–12s — PROJECT CONCEPT PREVIEWS
                 ========================================================================= */}
             {scene === 3 && (
               <motion.div
@@ -468,71 +481,69 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
                 <div className="text-center mb-5">
                   <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-emerald-400 mb-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>VERIFIED LIVE BUILDS · DEPLOYED ON VERCEL</span>
+                    <span>PROJECT CONCEPTS</span>
                   </div>
                   <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     FEATURED PORTFOLIO PROJECTS
                   </h3>
                 </div>
 
-                {/* 2-Card 3D Showcase matching user's real projects */}
+                {/* Visual previews */}
                 <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                  {/* Real Project 1: Omar Portfolio */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="group relative bg-[#0e0f14]/90 border border-blue-500/40 rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col justify-between"
+                    className="glass-surface group relative border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col justify-between"
                   >
                     <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-900 mb-3 border border-white/10">
                       <img
-                        src="/src/assets/images/project_omar_portfolio_preview_1793731034310.jpg"
-                        alt="Omar Portfolio Website"
+                        src={portfolioPreview}
+                        alt="Portfolio concept preview"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-blue-400 border border-white/10">
                         01. PORTFOLIO
                       </div>
                       <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-emerald-600/90 text-[10px] font-mono text-white font-semibold">
-                        LIVE VERCEL
+                        CONCEPT
                       </div>
                     </div>
                     <div>
                       <h4 className="text-base sm:text-lg font-bold text-white mb-1">Omar Portfolio</h4>
                       <p className="text-xs text-neutral-300 mb-3 line-clamp-2">
-                        A personal developer portfolio showcasing my work, skills, creativity, and web development journey.
+                        A visual portfolio concept with animated sections and project cards.
                       </p>
                     </div>
                     <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono text-blue-400">
-                      <span>portopholio-one.vercel.app</span>
+                      <span>Portfolio concept</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </div>
                   </motion.div>
 
-                  {/* Real Project 2: Muslim Shirts Store */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="group relative bg-[#0e0f14]/90 border border-emerald-500/40 rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col justify-between"
+                    className="glass-surface group relative border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col justify-between"
                   >
                     <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-900 mb-3 border border-white/10">
                       <img
-                        src="/src/assets/images/project_muslims_preview_1793662392866.jpg"
-                        alt="Muslim Shirts E-Commerce Platform"
+                        src={storePreview}
+                        alt="Clothing storefront concept preview"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md text-[10px] font-mono text-emerald-400 border border-white/10">
                         02. E-COMMERCE
                       </div>
                       <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-emerald-600/90 text-[10px] font-mono text-white font-semibold">
-                        LIVE STORE
+                        CONCEPT
                       </div>
                     </div>
                     <div>
                       <h4 className="text-base sm:text-lg font-bold text-white mb-1">Muslim Shirts Store</h4>
                       <p className="text-xs text-neutral-300 mb-3 line-clamp-2">
-                        A custom e-commerce web platform and brand storefront created and built by Omar.
+                        A clothing storefront concept focused on product presentation.
                       </p>
                     </div>
                     <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono text-emerald-400">
-                      <span>muslims-app.vercel.app</span>
+                      <span>Storefront concept</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </div>
                   </motion.div>

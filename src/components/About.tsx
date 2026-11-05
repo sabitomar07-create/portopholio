@@ -56,7 +56,7 @@ export const About: React.FC = () => {
           <p className="text-base sm:text-lg text-neutral-300 leading-relaxed">
             I'm Omar, a beginner web developer learning how to build beautiful,
             interactive, and functional websites. I enjoy experimenting with designs,
-            exploring new technologies, and improving my skills with every project.
+            exploring new ideas, and learning with every project.
           </p>
         </motion.div>
 
@@ -75,7 +75,7 @@ export const About: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl blur-xl opacity-40 group-hover:opacity-75 transition duration-500" />
 
               {/* Photo Frame */}
-              <div className="relative bg-[#0d0e12] border border-white/15 rounded-3xl p-3 shadow-2xl overflow-hidden">
+              <div className="glass-surface relative border border-white/15 rounded-3xl p-3 shadow-2xl overflow-hidden">
                 <div className="relative aspect-[4/5] sm:aspect-square w-full rounded-2xl overflow-hidden bg-neutral-900">
                   <img
                     src="/assets/aistudio/WhatsApp_Image_2026-10-29_at_9.34.35_AM_84d30dde.jpeg"
@@ -122,7 +122,7 @@ export const About: React.FC = () => {
                   variants={fadeInScaleVariant}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
-                  className="group relative bg-[#0e0f14]/80 border border-white/10 hover:border-blue-500/40 rounded-2xl p-6 sm:p-7 backdrop-blur-md transition-all shadow-lg hover:shadow-blue-900/20"
+                  className="glass-surface group relative border border-white/10 hover:border-blue-500/40 rounded-2xl p-6 sm:p-7 transition-all shadow-lg hover:shadow-blue-900/20"
                 >
                   <div className="flex items-start gap-5">
                     {/* Number and Icon Accent */}

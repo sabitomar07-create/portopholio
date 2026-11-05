@@ -5,7 +5,6 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Showreel } from './components/Showreel';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -37,7 +36,7 @@ export default function App() {
 
   // Active section tracking via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ['home', 'showreel', 'about', 'skills', 'projects', 'contact'];
+    const sectionIds = ['home', 'showreel', 'about', 'projects', 'contact'];
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -88,7 +87,6 @@ export default function App() {
         {/* Dedicated 15-Second Cinematic Motion Graphics Showreel */}
         <Showreel onNavigate={scrollToSection} />
         <About />
-        <Skills />
         <Projects />
         <Contact />
       </main>

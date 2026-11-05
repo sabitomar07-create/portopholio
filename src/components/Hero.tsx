@@ -4,9 +4,6 @@ import {
   ArrowDown,
   Sparkles,
   Play,
-  CheckCircle2,
-  Code2,
-  Layers,
   Cpu,
   Laptop,
 } from 'lucide-react';
@@ -91,7 +88,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-medium tracking-wide uppercase mb-6 glow-subtle"
             >
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-              <span>AVAILABLE FOR PROJECTS</span>
+              <span>PERSONAL WEB PROJECTS</span>
             </motion.div>
 
             {/* Animation 1: Main Heading with Staggered Text Reveal */}
@@ -188,27 +185,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               </motion.button>
             </motion.div>
 
-            {/* Floating Quick Badges */}
-            <motion.div
-              variants={fadeInScaleVariant}
-              initial="hidden"
-              animate="visible"
-              custom={0.8}
-              className="mt-12 pt-8 border-t border-white/10 w-full max-w-xl flex items-center gap-6 text-xs text-neutral-400 font-mono"
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                <span>Responsive Design</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-purple-400" />
-                <span>Modern React &amp; Tailwind</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Interactive Motion</span>
-              </div>
-            </motion.div>
           </div>
 
           {/* Right Column: Floating Interactive Code Studio Window */}
@@ -216,32 +192,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             {/* Ambient Backlight */}
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-3xl blur-2xl -z-10" />
 
-            {/* Floating Technology Badges */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-6 -left-6 z-20 px-3 py-1.5 rounded-lg bg-[#111116] border border-blue-500/30 text-blue-400 text-xs font-mono shadow-xl flex items-center gap-1.5"
-            >
-              <Code2 className="w-3.5 h-3.5" />
-              <span>React.js</span>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              className="absolute -bottom-4 -right-4 z-20 px-3 py-1.5 rounded-lg bg-[#111116] border border-purple-500/30 text-purple-300 text-xs font-mono shadow-xl flex items-center gap-1.5"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Tailwind CSS</span>
-            </motion.div>
-
             {/* Interactive Window Card */}
             <motion.div
               variants={fadeInScaleVariant}
               initial="hidden"
               animate="visible"
               custom={0.4}
-              className="w-full bg-[#0d0e12] border border-white/15 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl"
+              className="glass-surface w-full border border-white/15 rounded-2xl shadow-2xl overflow-hidden"
             >
               {/* Window Title Bar */}
               <div className="flex items-center justify-between px-4 py-3 bg-[#13141a] border-b border-white/10">
