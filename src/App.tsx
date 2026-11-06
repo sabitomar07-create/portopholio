@@ -67,7 +67,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#080808] text-neutral-100 selection:bg-blue-600 selection:text-white">
+    <div className="relative min-h-screen bg-transparent text-neutral-100 selection:bg-blue-600 selection:text-white">
       {/* Subtle Ambient Background Animation */}
       <BackgroundEffect />
 
