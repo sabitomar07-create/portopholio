@@ -60,7 +60,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({ isOpen, onClose }) =
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="relative w-full max-w-lg bg-[#0f0f11] border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-blue-900/30 overflow-hidden z-10"
+            className="glass-surface relative w-full max-w-lg rounded-2xl p-6 sm:p-8 shadow-2xl shadow-blue-900/30 overflow-hidden z-10"
           >
             {/* Ambient inner glow */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
@@ -102,11 +102,11 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({ isOpen, onClose }) =
 
             {/* Interactive Highlights */}
             <div className="grid grid-cols-2 gap-3 mb-6 text-xs text-neutral-400">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-2.5">
+              <div className="glass-inset p-3 rounded-xl flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
                 <span>Motion-crafted portfolio</span>
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex items-center gap-2.5">
+              <div className="glass-inset p-3 rounded-xl flex items-center gap-2.5">
                 <Terminal className="w-4 h-4 text-purple-400 shrink-0" />
                 <span>Interactive code sandbox</span>
               </div>
@@ -118,7 +118,7 @@ export const WelcomePopup: React.FC<WelcomePopupProps> = ({ isOpen, onClose }) =
                 {...buttonScaleProps}
                 onClick={onClose}
                 autoFocus
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm tracking-wide shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                className="glass-control w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-500/35 hover:bg-blue-500/50 text-white font-semibold text-sm tracking-wide shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
               >
                 <span>LET'S EXPLORE</span>
                 <ArrowRight className="w-4 h-4" />

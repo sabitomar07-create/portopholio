@@ -74,7 +74,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <motion.button
               {...buttonScaleProps}
               onClick={onClose}
-              className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-black/70 hover:bg-black text-neutral-300 hover:text-white border border-white/10 backdrop-blur-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="glass-control absolute top-4 right-4 z-20 p-2 rounded-xl text-neutral-300 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               aria-label="Close project details"
             >
               <X className="w-5 h-5" />
@@ -117,7 +117,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               </div>
 
               {/* Live URL Pill if available */}
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-between mb-6">
+              <div className="glass-inset p-3 rounded-xl flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2 text-xs text-neutral-300 truncate">
                   <Globe className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="font-mono text-neutral-200 truncate">{project.demoUrl}</span>
@@ -125,7 +125,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 <motion.button
                   {...buttonScaleProps}
                   onClick={handleCopyLink}
-                  className="ml-3 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-neutral-300 hover:text-white flex items-center gap-1.5 transition-colors shrink-0"
+                  className="glass-control ml-3 px-3 py-1.5 rounded-lg text-xs font-mono text-neutral-300 hover:text-white flex items-center gap-1.5 transition-colors shrink-0"
                 >
                   {copiedLink ? (
                     <>
@@ -167,7 +167,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   {project.features.map((feature, i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5 text-xs text-neutral-300"
+                      className="glass-inset p-3 rounded-xl flex items-start gap-2.5 text-xs text-neutral-300"
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                       <span>{feature}</span>
@@ -188,7 +188,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                   href={project.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition-all"
+                  className="glass-control flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-emerald-500/30 hover:bg-emerald-500/45 text-white font-semibold text-sm tracking-wide shadow-lg shadow-emerald-600/20 transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Open Preview</span>
@@ -197,7 +197,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 <motion.button
                   {...buttonScaleProps}
                   onClick={handleCopyLink}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white border border-white/15 font-semibold text-sm tracking-wide transition-all"
+                  className="glass-control flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-neutral-200 hover:text-white font-semibold text-sm tracking-wide transition-all"
                 >
                   <Copy className="w-4 h-4" />
                   <span>{copiedLink ? 'Copied' : 'Copy Preview Link'}</span>

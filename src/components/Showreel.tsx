@@ -179,7 +179,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
           </div>
 
           {/* Quick Scene Jump Tabs */}
-          <div className="flex items-center gap-1.5 p-1.5 bg-[#0f1015] border border-white/10 rounded-xl overflow-x-auto max-w-full">
+          <div className="glass-inset flex items-center gap-1.5 p-1.5 rounded-xl overflow-x-auto max-w-full">
             {CHAPTERS.map((ch, idx) => {
               const isActive = scene === idx;
               return (
@@ -318,7 +318,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
               >
                 <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                   {/* Left: Floating 3D Code Sandbox Panel */}
-                  <div className="md:col-span-7 bg-[#0d0f15]/90 border border-blue-500/30 rounded-2xl p-5 shadow-2xl backdrop-blur-xl relative">
+                  <div className="glass-surface md:col-span-7 border border-blue-400/25 rounded-2xl p-5 shadow-2xl relative">
                     <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-xs font-mono text-neutral-400">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
@@ -658,7 +658,7 @@ export const Showreel: React.FC<ShowreelProps> = ({ onNavigate }) => {
             </div>
 
             {/* Control Bar: Play/Pause, Audio, Chapters, Fullscreen */}
-            <div className="flex items-center justify-between text-xs text-neutral-300 bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10">
+            <div className="glass-surface flex items-center justify-between text-xs text-neutral-300 px-3.5 py-2 rounded-xl">
               <div className="flex items-center gap-3">
                 {/* Play/Pause Button */}
                 <button
