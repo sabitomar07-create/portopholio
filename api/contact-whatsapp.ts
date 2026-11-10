@@ -60,20 +60,18 @@ async function handler(request: Request): Promise<Response> {
   const emailFrom = env.CONTACT_EMAIL_FROM;
   const emailTo = env.CONTACT_EMAIL_TO || 'sabitomar07@gmail.com';
 
-  const missing = [
-    ...(!accessToken || !phoneNumberId || !recipient || !templateName ? ['WhatsApp'] : []),
-    ...(!resendApiKey || !emailFrom ? ['email'] : []),
-  ];
-  if (missing.length) {
-    return json({ error: `${missing.join(' and ')} delivery is not configured yet.` }, 503);
-  }
-  if (!/^\d+$/.test(phoneNumberId) || recipient.length < 8 || recipient.length > 15 ||
-      !/^[a-z0-9_]+$/.test(templateName) || !/^v\d+\.\d+$/.test(graphVersion)) {
-    return json({ error: 'WhatsApp configuration is invalid.' }, 503);
+  const whatsappConfigured = Boolean(accessToken && phoneNumberId && recipient && templateName);
+  const emailConfigured = Boolean(resendApiKey && emailFrom);
+  const whatsappConfigurationValid = Boolean(whatsappConfigured && phoneNumberId && /^\d+$/.test(phoneNumberId) &&
+    recipient.length >= 8 && recipient.length <= 15 && /^[a-z0-9_]+$/.test(templateName) &&
+    /^v\d+\.\d+$/.test(graphVersion));
+  if (!whatsappConfigurationValid && !emailConfigured) {
+    const error = whatsappConfigured ? 'WhatsApp configuration is invalid.' : 'Contact notifications are not configured yet.';
+    return json({ error }, 503);
   }
 
   const [whatsappResult, emailResult] = await Promise.allSettled([
-    fetch(`https://graph.facebook.com/${graphVersion}/${phoneNumberId}/messages`, {
+    whatsappConfigurationValid ? fetch(`https://graph.facebook.com/${graphVersion}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -92,8 +90,8 @@ async function handler(request: Request): Promise<Response> {
           }],
         },
       }),
-    }),
-    fetch('https://api.resend.com/emails', {
+    }) : Promise.resolve(new Response(null, { status: 503 })),
+    emailConfigured ? fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${resendApiKey}`,
@@ -107,11 +105,11 @@ async function handler(request: Request): Promise<Response> {
         text: `New portfolio contact form submission\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
         html: `<h2>New portfolio contact form submission</h2><p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Subject:</strong> ${escapeHtml(subject)}</p><p><strong>Message:</strong></p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
       }),
-    }),
+    }) : Promise.resolve(new Response(null, { status: 503 })),
   ]);
 
-  const whatsappSent = whatsappResult.status === 'fulfilled' && whatsappResult.value.ok;
-  const emailSent = emailResult.status === 'fulfilled' && emailResult.value.ok;
+  const whatsappSent = whatsappConfigured && whatsappResult.status === 'fulfilled' && whatsappResult.value.ok;
+  const emailSent = emailConfigured && emailResult.status === 'fulfilled' && emailResult.value.ok;
   if (!whatsappSent) {
     console.error('WhatsApp Cloud API failed to deliver a contact notification.');
   }
@@ -120,10 +118,21 @@ async function handler(request: Request): Promise<Response> {
   }
 
   if (!whatsappSent || !emailSent) {
-    const failed = [!whatsappSent ? 'WhatsApp' : '', !emailSent ? 'email' : ''].filter(Boolean);
     const delivered = [whatsappSent ? 'WhatsApp' : '', emailSent ? 'email' : ''].filter(Boolean);
+    const unavailable = [
+      ...(!whatsappSent ? [
+        whatsappConfigured
+          ? whatsappConfigurationValid ? 'WhatsApp delivery failed' : 'WhatsApp configuration is invalid'
+          : 'WhatsApp is not configured yet',
+      ] : []),
+      ...(!emailSent ? [emailConfigured ? 'email delivery failed' : 'email is not configured yet'] : []),
+    ];
+    const message = `The message reached ${delivered.join(' and ') || 'neither destination'}, but ${unavailable.join(' and ')}.`;
+    if (whatsappSent || emailSent) {
+      return json({ success: true, whatsappSent, emailSent, warning: message });
+    }
     return json({
-      error: `The message reached ${delivered.join(' and ') || 'neither destination'}, but ${failed.join(' and ')} delivery failed. Please try again later.`,
+      error: `${message} Please try again later.`,
       whatsappSent,
       emailSent,
     }, 502);
