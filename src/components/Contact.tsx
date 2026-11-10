@@ -28,8 +28,9 @@ export const Contact: React.FC = () => {
 
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'sent' | 'partial' | 'error'>('idle');
   const [submitError, setSubmitError] = useState('');
+  const [submitWarning, setSubmitWarning] = useState('');
 
   const handleCopyEmail = async () => {
     try {
@@ -73,6 +74,7 @@ export const Contact: React.FC = () => {
 
     setSubmitStatus('sending');
     setSubmitError('');
+    setSubmitWarning('');
 
     try {
       const response = await fetch('/api/contact-whatsapp', {
@@ -90,7 +92,12 @@ export const Contact: React.FC = () => {
         throw new Error(typeof result.error === 'string' ? result.error : 'Message delivery failed. Please try again later.');
       }
 
-      setSubmitStatus('sent');
+      if (result.whatsappSent && result.emailSent) {
+        setSubmitStatus('sent');
+      } else {
+        setSubmitStatus('partial');
+        setSubmitWarning(typeof result.warning === 'string' ? result.warning : 'The message reached one destination only.');
+      }
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       setSubmitStatus('error');
@@ -304,6 +311,12 @@ export const Contact: React.FC = () => {
                   <div>
                     <span className="font-semibold">Message sent.</span> Your inquiry was delivered to WhatsApp and email.
                   </div>
+                </div>
+              )}
+              {submitStatus === 'partial' && (
+                <div role="status" className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-start gap-2.5 text-xs text-amber-200">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-amber-300 mt-0.5" />
+                  <span>{submitWarning}</span>
                 </div>
               )}
               {submitStatus === 'error' && (
