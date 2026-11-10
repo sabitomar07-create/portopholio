@@ -28,8 +28,8 @@ export const Contact: React.FC = () => {
 
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'ready-to-send'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState('');
 
   const handleCopyEmail = async () => {
     try {
@@ -67,26 +67,38 @@ export const Contact: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
+    setSubmitStatus('sending');
+    setSubmitError('');
 
-    // Realistic processing
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('ready-to-send');
+    try {
+      const response = await fetch('/api/contact-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(typeof result.error === 'string' ? result.error : 'Message delivery failed. Please try again later.');
+      }
 
-      // Generate real mailto intent so user's client actually prepares message to Omar
-      const subject = encodeURIComponent(formData.subject || `Message from ${formData.name}`);
-      const body = encodeURIComponent(
-        `Hi Omar,\n\n${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
-      );
-      window.location.href = `mailto:${OMAR_EMAIL}?subject=${subject}&body=${body}`;
-    }, 600);
+      setSubmitStatus('sent');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      setSubmitStatus('error');
+      setSubmitError(error instanceof Error ? error.message : 'Message delivery failed. Please try again later.');
+    }
   };
+
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(OMAR_EMAIL)}&su=${encodeURIComponent('Hello Omar')}`;
 
   return (
     <section id="contact" className="py-24 sm:py-32 relative z-10 border-t border-white/5">
@@ -162,10 +174,12 @@ export const Contact: React.FC = () => {
 
               <motion.a
                 {...buttonScaleProps}
-                href={`mailto:${OMAR_EMAIL}?subject=Hello%20Omar`}
+                href={gmailComposeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-600/90 hover:bg-blue-600 text-white font-medium text-xs uppercase tracking-wider shadow-md shadow-blue-600/20 transition-all"
               >
-                <span>Launch Email Client</span>
+                <span>Open Gmail Compose</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </motion.a>
             </div>
@@ -185,7 +199,7 @@ export const Contact: React.FC = () => {
               Send a Message
             </h3>
             <p className="text-xs text-neutral-400 mb-6">
-              Fill out the form below. When submitted, this validates your input and prepares a direct message draft.
+                Fill out the form below and your message will be sent to WhatsApp and email.
             </p>
 
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
@@ -204,7 +218,7 @@ export const Contact: React.FC = () => {
                       if (errors.name) setErrors({ ...errors, name: undefined });
                     }}
                     placeholder="e.g. Alex Morgan"
-                    className={`w-full px-4 py-2.5 rounded-xl bg-black/40 border text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors ${
+                  className={`w-full px-4 py-2.5 rounded-xl bg-black/40 border text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors ${
                       errors.name ? 'border-rose-500 focus:border-rose-500 ring-1 ring-rose-500/20' : 'border-white/15 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
                     }`}
                   />
@@ -229,7 +243,7 @@ export const Contact: React.FC = () => {
                       if (errors.email) setErrors({ ...errors, email: undefined });
                     }}
                     placeholder="you@domain.com"
-                    className={`w-full px-4 py-2.5 rounded-xl bg-black/40 border text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors ${
+                  className={`w-full px-4 py-2.5 rounded-xl bg-black/40 border text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors ${
                       errors.email ? 'border-rose-500 focus:border-rose-500 ring-1 ring-rose-500/20' : 'border-white/15 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
                     }`}
                   />
@@ -284,12 +298,18 @@ export const Contact: React.FC = () => {
               </div>
 
               {/* Status Alert */}
-              {submitStatus === 'ready-to-send' && (
+              {submitStatus === 'sent' && (
                 <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-start gap-2.5 text-xs text-emerald-300">
                   <Check className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" />
                   <div>
-                    <span className="font-semibold">Message validated!</span> Opening your email client to send your note directly to Omar ({OMAR_EMAIL}).
+                    <span className="font-semibold">Message sent.</span> Your inquiry was delivered to WhatsApp and email.
                   </div>
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div role="alert" className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-start gap-2.5 text-xs text-rose-300">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
+                  <span>{submitError}</span>
                 </div>
               )}
 
@@ -297,18 +317,15 @@ export const Contact: React.FC = () => {
               <motion.button
                 {...buttonScaleProps}
                 type="submit"
-                disabled={isSubmitting}
+                disabled={submitStatus === 'sending'}
                 className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-semibold text-sm tracking-wide shadow-lg shadow-blue-600/30 transition-all"
               >
-                {isSubmitting ? (
-                  <span>Validating Message...</span>
-                ) : (
-                  <>
-                    <span>Send Message to Omar</span>
-                    <Send className="w-4 h-4" />
-                  </>
-                )}
+                <span>{submitStatus === 'sending' ? 'Sending…' : 'Send Message'}</span>
+                <Send className="w-4 h-4" />
               </motion.button>
+              <p className="text-xs text-neutral-400 text-center">
+                Your name, email, subject, and message will be sent to WhatsApp and Omar’s email so he can reply.
+              </p>
             </form>
           </motion.div>
         </div>
@@ -316,3 +333,4 @@ export const Contact: React.FC = () => {
     </section>
   );
 };
+
