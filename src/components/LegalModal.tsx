@@ -52,7 +52,7 @@ export const LegalModal = ({ document, onClose }: LegalModalProps) => {
               <div className="space-y-5 text-sm leading-relaxed text-neutral-300">
                 <p>This portfolio does not intentionally set advertising or analytics cookies. It does not include an analytics tracker.</p>
                 <p>The welcome message dismissal is remembered for the current browser tab using session storage. This is browser storage, not a cookie, and it is cleared when the tab session ends.</p>
-                <p>If you use the contact form, the message is prepared in your own email application through a mail link. The site itself does not submit or store the form contents.</p>
+                <p>If you use the contact form, your name, email address, subject, and message are sent to the site owner through WhatsApp and email so they can respond. The site does not store contact form submissions.</p>
                 <p>External links and your email provider may handle information under their own privacy policies. This notice may be updated as the site changes.</p>
               </div>
             </>
@@ -75,3 +75,4 @@ export const LegalModal = ({ document, onClose }: LegalModalProps) => {
   </AnimatePresence>
   );
 };
+
